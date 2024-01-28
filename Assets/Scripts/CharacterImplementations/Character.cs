@@ -40,6 +40,9 @@ namespace CharacterImplementations
         [SerializeField]
         private List<Sprite> m_SittingAnimationSprites;
         
+        [SerializeField]
+        private List<Sprite> m_OpenMouseAnimationSprites;
+        
         public List<Sprite> IdleAnimationSprites => m_IdleAnimationSprites;
         public List<Sprite> WalkBackAnimationSprites => m_WalkBackAnimationSprites;
         public List<Sprite> WalkFrontAnimationSprites => m_WalkFrontAnimationSprites;
@@ -54,6 +57,7 @@ namespace CharacterImplementations
         public List<Sprite> SittingAnimationSprites => m_SittingAnimationSprites;
         public List<Sprite> WalkLeftAnimationSprites => m_WalkLeftAnimationSprites;
         
+        public List<Sprite> OpenMouseAnimationSprites => m_OpenMouseAnimationSprites;
         
 
     }
