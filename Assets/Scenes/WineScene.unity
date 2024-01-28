@@ -328,7 +328,7 @@ MonoBehaviour:
   maxX: 8
   minChangeTime: 0.1
   maxChangeTime: 0.4
-  maxDrops: 100
+  maxDrops: 200
   moveOutOfFrameSpeed: 3
 --- !u!212 &250273867
 SpriteRenderer:
