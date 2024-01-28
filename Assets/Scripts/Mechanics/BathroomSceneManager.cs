@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Roro.Scripts.GameManagement;
+using Roro.Scripts.Sounds.Core;
+using Roro.Scripts.Sounds.Data;
 using UnityCommon.Modules;
 using UnityCommon.Runtime.UI;
 using UnityCommon.Singletons;
@@ -16,6 +18,10 @@ public class BathroomSceneManager : SingletonBehaviour<BathroomSceneManager>
 
     [SerializeField] 
     private CharacterMovement m_CharacterMovement;
+    
+    [SerializeField] 
+    private Sound m_PeeSoud;
+
     
     private void Awake()
     {
@@ -67,6 +73,8 @@ public class BathroomSceneManager : SingletonBehaviour<BathroomSceneManager>
         if (m_CurrentBackgroundIndex > 3)
         {
             m_CharacterMovement.CanMove = false;
+            
+            SoundManager.Instance.PlayOneShot(m_PeeSoud);
             
             Conditional.Wait(2).Do(() =>
             {
