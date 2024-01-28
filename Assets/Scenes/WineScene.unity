@@ -322,7 +322,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dropPrefab: {fileID: 938468658435553076, guid: 961de5144559a43ccb251df56406fe50, type: 3}
-  objectToInstantiate: {fileID: 0}
   spawnInterval: 0.1
   initialMoveSpeed: 6
   minX: -8
@@ -392,7 +391,7 @@ Transform:
   m_GameObject: {fileID: 250273865}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.8389378, y: 4.13, z: 0}
+  m_LocalPosition: {x: 0.8389378, y: 4.13, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

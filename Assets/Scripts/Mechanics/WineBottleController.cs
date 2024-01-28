@@ -3,7 +3,7 @@ using UnityEngine;
 public class WineBottleController : MonoBehaviour
 {
     public GameObject dropPrefab; // Assign the drop prefab in the inspector
-    public GameObject objectToInstantiate; // Publicly assignable object to be instantiated
+    //public GameObject objectToInstantiate; // Publicly assignable object to be instantiated
     public float spawnInterval = 1f; // Time between drop spawns
     public float initialMoveSpeed = 5f; // Initial speed of bottle movement
     public float minX, maxX; // Min and max X positions for bottle movement
@@ -98,7 +98,7 @@ public class WineBottleController : MonoBehaviour
         // Check if the bottle is out of the camera view and instantiate the object
         if (!IsObjectInView())
         {
-            InstantiateObjectAtScreenCenter();
+            //InstantiateObjectAtScreenCenter();
             Destroy(gameObject); // Destroy the bottle
         }
     }
@@ -108,7 +108,7 @@ public class WineBottleController : MonoBehaviour
         var screenPoint = Camera.main.WorldToViewportPoint(transform.position);
         return screenPoint.z > 0 && screenPoint.x > 0 && screenPoint.x < 1 && screenPoint.y > 0 && screenPoint.y < 1;
     }
-
+/*
     void InstantiateObjectAtScreenCenter()
     {
         // Instantiate the object at the center of the screen
@@ -116,4 +116,5 @@ public class WineBottleController : MonoBehaviour
         Vector3 worldCenter = Camera.main.ScreenToWorldPoint(screenCenter);
         Instantiate(objectToInstantiate, worldCenter, Quaternion.identity);
     }
+    */
 }
