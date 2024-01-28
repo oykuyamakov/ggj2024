@@ -1,8 +1,12 @@
 using System;
 using Based.Utility;
+using Events;
+using MechanicEvents;
+using Roro.Scripts.GameManagement;
 using Roro.Scripts.Sounds.Core;
 using Roro.Scripts.Sounds.Data;
 using Roro.Scripts.UI.UITemplates.UITemplateImplementations;
+using UnityCommon.Modules;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -21,6 +25,9 @@ namespace Mechanics
         private Image m_BarImage;
 
         [SerializeField] 
+        private Image m_DateImage;
+
+        [SerializeField] 
         private float m_BarDecreaseSpeed = 2;
 
         private float m_CurrentValue;
@@ -29,26 +36,35 @@ namespace Mechanics
         private bool m_IsBarActive;
         private void Start()
         {
-            m_IsBarActive = true;
+            Conditional.Wait(4).Do(() =>
+            {
+                m_IsBarActive = true;
+            });
             
             m_CurrentValue = 80;
             m_SliderTemplate.Set(m_CurrentValue,100);
+
+            m_DateImage.sprite = GameManager.Instance.DateChar.NormalSprite;
         }
 
         private void Update()
         {
-            if (m_CurrentValue > 99 || m_CurrentValue < 1)
-            {
-                m_IsBarActive = false;
-                
-                m_BarImage.color = Color.cyan;
-            }
             
-
             if (!m_IsBarActive)
             {
                 return;
             }
+            
+            if (m_CurrentValue > 99 || m_CurrentValue < 1)
+            {
+                m_IsBarActive = false;
+                
+                m_BarImage.color = Color.black;
+                
+                using var evt = MechanicResultEvent.Get(false);
+                evt.SendGlobal();
+            }
+            
 
             m_CurrentValue -= 0.1f * m_BarDecreaseSpeed * Time.deltaTime;
             m_SliderTemplate.AnimatedSet(m_CurrentValue,0.1f,100);
