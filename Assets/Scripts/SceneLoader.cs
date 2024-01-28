@@ -39,7 +39,7 @@ public class SceneLoader : MonoBehaviour
 
             yield return new WaitForSeconds(2);
             
-            LoadFirstScene();
+            //LoadFirstScene();
         }
         
         public void LoadFirstScene()

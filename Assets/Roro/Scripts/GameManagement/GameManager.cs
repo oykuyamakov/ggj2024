@@ -158,7 +158,7 @@ namespace Roro.Scripts.GameManagement
             m_NextUI.SetActive(false);
             m_SceneInfoCanvas.enabled = false;
             //m_WinLooseCanvas.enabled = false;
-            //m_IntroUI.SetActive(true);
+            m_IntroUI.SetActive(true);
         }
 
         private void OnDestroy()
