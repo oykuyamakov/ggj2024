@@ -13,21 +13,33 @@ public class CharSelectImage : MonoBehaviour,IPointerEnterHandler, IPointerExitH
     
     [SerializeField] 
     private Character m_Char;
-
+    
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if(GameManager.Instance.CharSelected)
+            return;
+
+        //m_CharImage.transform.localScale = new Vector3(2.5f, 2.5f, 2.5f);
+        
         m_CharImage.sprite = m_Char.SelectedAnimationSprites.First();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if(GameManager.Instance.CharSelected)
+            return;
+        
         m_CharImage.sprite = m_Char.IdleAnimationSprites.First();
     }
 
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        m_CharImage.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+        if(GameManager.Instance.CharSelected)
+            return;
+        
+        
+        m_CharImage.transform.localScale = new Vector3(2f, 2f, 2f);
         
         GameManager.Instance.ChangeCurrentCharacter(m_Char);
     }

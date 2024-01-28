@@ -55,6 +55,9 @@ namespace Roro.Scripts.GameManagement
         
         [SerializeField]
         private Canvas m_SceneInfoCanvas;
+
+        [SerializeField] 
+        private Image m_SceneInfoImage;
         
         [SerializeField]
         private UIAlphaAnim m_SceneInfoPanelAlphaAnim;
@@ -65,8 +68,6 @@ namespace Roro.Scripts.GameManagement
         private List<Sprite> m_BathroomSceneInfos;
         [SerializeField] 
         private List<Sprite> m_EatingSceneInfos;
-        [SerializeField] 
-        private List<Sprite> m_WalkingSceneInfos;
         [SerializeField] 
         private List<Sprite> m_Subway2SceneInfos;
         [SerializeField] 
@@ -95,6 +96,14 @@ namespace Roro.Scripts.GameManagement
 
         [SerializeField] 
         private GameObject m_IntroUI;
+        
+        //Mechanic WinLooseUI
+        [SerializeField] 
+        private Sprite m_PeeLooseImage;
+        [SerializeField] 
+        private Sprite m_SubwayLooseImage;
+        [SerializeField]
+        private Sprite m_EatLooseImage;
 
         #endregion
         
@@ -199,6 +208,13 @@ namespace Roro.Scripts.GameManagement
             }
             
             EnableNextCanvas();
+            
+            if(m_ScenesByOrder[m_CurrentSceneIndex] == SceneName.BathroomScene)
+                m_NextUI.GetComponent<NextUI>().EnableMechanicFeedbackBackground(m_PeeLooseImage);
+            else if(m_ScenesByOrder[m_CurrentSceneIndex] == SceneName.SubwayScene)
+                m_NextUI.GetComponent<NextUI>().EnableMechanicFeedbackBackground(m_SubwayLooseImage);
+            else if(m_ScenesByOrder[m_CurrentSceneIndex] == SceneName.EatingScene)
+                m_NextUI.GetComponent<NextUI>().EnableMechanicFeedbackBackground(m_EatLooseImage);
         }
 
         public void EnableNextCanvas()
@@ -208,13 +224,44 @@ namespace Roro.Scripts.GameManagement
         
         private void OnGameOver()
         {
-            //Loose UI
+            m_WinLooseCanvas.enabled = true;
+            m_WinLooseCanvasAlphaAnim.FadeIn();
+            m_WinLooseImage.sprite = m_LooseScreen;
         }
 
         private void EnableSceneInfoCanvas()
         {
-            m_SceneInfoCanvas.enabled = true;
-            m_SceneInfoPanelAlphaAnim.FadeIn();
+            Debug.Log("current scene is " + m_ScenesByOrder[CurrentSceneIndex]);
+            
+            switch (m_ScenesByOrder[m_CurrentSceneIndex])
+            {
+                case SceneName.SubwayScene:
+                    m_SceneInfoImage.sprite = m_CurrentSceneIndex < 3 ? m_SubwaySceneInfos[0] : m_Subway2SceneInfos[0];
+                    break;
+                case SceneName.BathroomScene:
+                    m_SceneInfoImage.sprite = m_BathroomSceneInfos[0];
+                    break;
+                case SceneName.EatingScene:
+                    m_SceneInfoImage.sprite = m_EatingSceneInfos[0];
+                    break;
+                    break;
+                case SceneName.WineScene:
+                    m_SceneInfoImage.sprite = m_WineSceneInfos[0];
+                    break;
+                case SceneName.StainScene:
+                    m_SceneInfoImage.sprite = m_StainSceneInfos[0];
+                    break;
+                case SceneName.SexScene:
+                    m_SceneInfoImage.sprite = m_SexSceneInfos[0];
+                    break;
+            }
+
+            if (m_CurrentSceneIndex > 1)
+            {
+                m_SceneInfoCanvas.enabled = true;
+                m_SceneInfoPanelAlphaAnim.FadeIn();
+            }
+            
             
             Conditional.Wait(5).Do(() =>
             {
@@ -243,7 +290,9 @@ namespace Roro.Scripts.GameManagement
 
             if (m_CurrentSceneIndex >= m_ScenesByOrder.Count)
             {
-                //Win
+                m_WinLooseCanvas.enabled = true;
+                m_WinLooseCanvasAlphaAnim.FadeIn();
+                m_WinLooseImage.sprite = m_WinScreen;
                 return;
             }
             
@@ -281,19 +330,19 @@ namespace Roro.Scripts.GameManagement
             {
                 case 0:
                     return;
-                case < 15f:
+                case < 10f:
                     m_TimerImage.sprite = m_TimerUIList[0];
                     break;
-                case < 30f:
+                case < 20f:
                     m_TimerImage.sprite = m_TimerUIList[1];
                     break;
-                case < 45f:
+                case < 30f:
                     m_TimerImage.sprite = m_TimerUIList[2];
                     break;
-                case < 60:
+                case < 40f:
                     m_TimerImage.sprite = m_TimerUIList[3];
                     break;
-                case < 75:
+                case < 60f:
                     m_TimerImage.sprite = m_TimerUIList[4];
                     break;
             }
@@ -315,8 +364,14 @@ namespace Roro.Scripts.GameManagement
             }
         }
 
+        private bool m_CharSelected = false;
+
+        public bool CharSelected => m_CharSelected;
+
         public void ChangeCurrentCharacter(Character character)
         {
+            m_CharSelected = true;
+            
             m_CurrentCharacter = character;
             
             NextScene();
