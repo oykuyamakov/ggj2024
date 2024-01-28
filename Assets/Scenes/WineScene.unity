@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dropPrefab: {fileID: 938468658435553076, guid: 961de5144559a43ccb251df56406fe50, type: 3}
-  objectToInstantiate: {fileID: 3178591060394464742, guid: b459f2b194305474ba80ef4e32184794, type: 3}
+  objectToInstantiate: {fileID: 0}
   spawnInterval: 0.1
   initialMoveSpeed: 6
   minX: -8

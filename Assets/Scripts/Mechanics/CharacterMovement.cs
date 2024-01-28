@@ -20,13 +20,24 @@ public class CharacterMovement : MonoBehaviour
     
     public bool CanMove = false;
 
+    private Vector3 m_InitPos;
+
+    private float m_Limit = 8.58f;
+
     private void Awake()
     {
+        m_InitPos = transform.position;
+        
         CanMove = true;
         
         m_CurrentCharacter = GameManager.Instance.CurrentCharacter;
         
         m_CurrentAnim = m_CurrentCharacter.IdleAnimationSprites;
+    }
+    
+    public void ResetPos()
+    {
+        transform.position = m_InitPos;
     }
 
     private void Update()
@@ -53,15 +64,18 @@ public class CharacterMovement : MonoBehaviour
             m_CurrentWalkDir = WalkDir.Left;
             
             m_CurrentAnim = m_CurrentCharacter.WalkLeftAnimationSprites;
-            
-            transform.localScale = transform.localScale.WithX(1);
+            var localScale = transform.localScale;
+            localScale = localScale.WithX( Math.Abs(localScale.x));
+            transform.localScale = localScale;
         }
         else if (Input.GetKey(KeyCode.D))
         {
             m_CurrentWalkDir = WalkDir.Right;
             
             m_CurrentAnim = m_CurrentCharacter.WalkLeftAnimationSprites;
-            transform.localScale = transform.localScale.WithX(-1);
+            var localScale = transform.localScale;
+            localScale = localScale.WithX(-Math.Abs(localScale.x));
+            transform.localScale = localScale;
         }
         else
         {
@@ -74,10 +88,10 @@ public class CharacterMovement : MonoBehaviour
                     m_CurrentAnim =m_CurrentCharacter.IdleLeftAnimationSprites;
                     break;
                 case WalkDir.Up:
-                    m_CurrentAnim =m_CurrentCharacter.IdleBackAnimationSprites;
+                    m_CurrentAnim =m_CurrentCharacter.IdleAnimationSprites;
                     break;
                 case WalkDir.Down:
-                    m_CurrentAnim =m_CurrentCharacter.IdleAnimationSprites;
+                    m_CurrentAnim =m_CurrentCharacter.IdleBackAnimationSprites;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -97,24 +111,30 @@ public class CharacterMovement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.W))
         {
-            // if (transform.localScale.x > 0.5f)
-            // {
-                transform.localScale -= new Vector3(0.3f, 0.3f, 0.3f) * Time.deltaTime;
-            //}
+            if (transform.localScale.y > 0.3f)
+            {
+                var localScale = transform.localScale;
+                localScale = localScale.WithX(Math.Abs(localScale.x));
+                localScale -= new Vector3(0.3f, 0.3f, 0.3f) * Time.deltaTime;
+                transform.localScale = localScale;
+            }
             
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            // if (transform.localScale.x < 1f)
-            // {
-                transform.localScale += new Vector3(0.3f, 0.3f, 0.3f) * Time.deltaTime;
-            //}
+            if (transform.localScale.y < 2f)
+            {
+                var localScale = transform.localScale;
+                localScale = localScale.WithX(Math.Abs(localScale.x));
+                localScale += new Vector3(0.3f, 0.3f, 0.3f) * Time.deltaTime;
+                transform.localScale = localScale;
+            }
         }
-        else if (Input.GetKey(KeyCode.A))
+        else if (Input.GetKey(KeyCode.A) && transform.position.x > -m_Limit)
         {
             transform.position += Vector3.left * (Time.deltaTime * m_Speed);
         }
-        else if (Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(KeyCode.D) && transform.position.x < m_Limit)
         {
             transform.position += Vector3.right * (Time.deltaTime * m_Speed);
         }
