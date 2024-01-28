@@ -64,15 +64,18 @@ public class CharacterMovement : MonoBehaviour
             m_CurrentWalkDir = WalkDir.Left;
             
             m_CurrentAnim = m_CurrentCharacter.WalkLeftAnimationSprites;
-            
-            transform.localScale = transform.localScale.WithX( Math.Abs(transform.localScale.x));
+            var localScale = transform.localScale;
+            localScale = localScale.WithX( Math.Abs(localScale.x));
+            transform.localScale = localScale;
         }
         else if (Input.GetKey(KeyCode.D))
         {
             m_CurrentWalkDir = WalkDir.Right;
             
             m_CurrentAnim = m_CurrentCharacter.WalkLeftAnimationSprites;
-            transform.localScale = transform.localScale.WithX(-Math.Abs(transform.localScale.x));
+            var localScale = transform.localScale;
+            localScale = localScale.WithX(-Math.Abs(localScale.x));
+            transform.localScale = localScale;
         }
         else
         {
@@ -110,8 +113,10 @@ public class CharacterMovement : MonoBehaviour
         {
             if (transform.localScale.y > 0.3f)
             {
-                transform.localScale = transform.localScale.WithX(Math.Abs(transform.localScale.x));
-                transform.localScale -= new Vector3(0.3f, 0.3f, 0.3f) * Time.deltaTime;
+                var localScale = transform.localScale;
+                localScale = localScale.WithX(Math.Abs(localScale.x));
+                localScale -= new Vector3(0.3f, 0.3f, 0.3f) * Time.deltaTime;
+                transform.localScale = localScale;
             }
             
         }
@@ -119,8 +124,10 @@ public class CharacterMovement : MonoBehaviour
         {
             if (transform.localScale.y < 2f)
             {
-                transform.localScale = transform.localScale.WithX(Math.Abs(transform.localScale.x));
-                transform.localScale += new Vector3(0.3f, 0.3f, 0.3f) * Time.deltaTime;
+                var localScale = transform.localScale;
+                localScale = localScale.WithX(Math.Abs(localScale.x));
+                localScale += new Vector3(0.3f, 0.3f, 0.3f) * Time.deltaTime;
+                transform.localScale = localScale;
             }
         }
         else if (Input.GetKey(KeyCode.A) && transform.position.x > -m_Limit)
