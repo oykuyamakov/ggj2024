@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1ab98ca05b16794db6e1b099aee71a8, type: 3}
+  m_Name: Biagi_Character
+  m_EditorClassIdentifier: 
+  m_IdleAnimationSprites:
+  - {fileID: 21300000, guid: a4d88b6fea50d4d0884155bfd11db3ec, type: 3}
+  - {fileID: 21300000, guid: b159c686863d74703adb7bdc07f11cf9, type: 3}
+  m_IdleBackAnimationSprites:
+  - {fileID: 21300000, guid: b60b39865a7ff4c2886a9600dad0b632, type: 3}
+  - {fileID: 21300000, guid: 2f94afac0ecd84d8c9692ac26611c143, type: 3}
+  m_IdleLeftAnimationSprites:
+  - {fileID: 21300000, guid: 3779e0fbd96da452ebec106213d2fa00, type: 3}
+  - {fileID: 21300000, guid: b1a723ee8a74644968a9d784e954a1cf, type: 3}
+  m_WalkBackAnimationSprites:
+  - {fileID: 21300000, guid: d4bf51b35ff454208ab91a0226d09ebf, type: 3}
+  - {fileID: 21300000, guid: 8a957c68619f24b909961d927f888544, type: 3}
+  m_WalkFrontAnimationSprites:
+  - {fileID: 21300000, guid: 3fc9aec5d734e4b7893884cd8c209782, type: 3}
+  - {fileID: 21300000, guid: 42a7af28f4e004d4eae7ee6b4176fd33, type: 3}
+  m_WalkLeftAnimationSprites:
+  - {fileID: 21300000, guid: d9eaf35eb7e74448abd08fdb6427b645, type: 3}
+  - {fileID: 21300000, guid: 8b6b210ccc03743e495bf923f6b49548, type: 3}
+  m_EatingAnimationSprites:
+  - {fileID: 21300000, guid: e0f903cdc56db485cb57bad3b4e26dd9, type: 3}
+  - {fileID: 21300000, guid: ea77ab17ce48843a4916fbaa5395c952, type: 3}
+  m_PeeingAnimationSprites:
+  - {fileID: 21300000, guid: ce5145e05157446e8a9163951a64dfb2, type: 3}
+  m_DeathAnimationSprites:
+  - {fileID: 21300000, guid: 61beb458b28ff488c84387e914541557, type: 3}
+  m_SelectedAnimationSprites:
+  - {fileID: 21300000, guid: 39f9f1dc6e4b34afa919ba909a4bfee1, type: 3}
+  m_SadAnimationSprites:
+  - {fileID: 21300000, guid: 5ce559efcf5674000b06139afac1e263, type: 3}
+  m_HappyAnimationSprites:
+  - {fileID: 21300000, guid: 49496567fa21e4d4cb2b30cbd3243414, type: 3}
+  m_SittingAnimationSprites:
+  - {fileID: 21300000, guid: ab003fff6502546f1bb7b573a7c1e9c7, type: 3}
+  m_OpenMouseAnimationSprites:
+  - {fileID: 21300000, guid: a1cbd29c4c3484727a8122e3afd84ef2, type: 3}
