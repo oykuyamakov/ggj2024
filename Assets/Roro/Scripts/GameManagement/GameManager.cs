@@ -125,8 +125,6 @@ namespace Roro.Scripts.GameManagement
             SceneName.SubwayScene,
             SceneName.BathroomScene,
             SceneName.EatingScene,
-            SceneName.WalkingScene,
-            SceneName.SubwayScene,
             SceneName.WineScene,
             SceneName.StainScene,
             SceneName.SexScene
@@ -320,6 +318,12 @@ namespace Roro.Scripts.GameManagement
             if (m_Timer >= 60f && !m_OnSwitchToNextScene)
             {
                 m_OnSwitchToNextScene = true;
+                
+                if (m_ScenesByOrder[m_CurrentSceneIndex] == SceneName.SexScene)
+                {
+                    OnSuccessfulMechanic();
+                    return;
+                }
                 OnFailedMechanic();
             }
         }
@@ -368,11 +372,26 @@ namespace Roro.Scripts.GameManagement
 
         public bool CharSelected => m_CharSelected;
 
+        private DateChar m_DateChar;
+        
+        public DateChar DateChar => m_DateChar;
+        
+        private bool m_DateCharSelected = false;
+
+        public bool DateCharSelected => m_DateCharSelected;
+
         public void ChangeCurrentCharacter(Character character)
         {
             m_CharSelected = true;
             
             m_CurrentCharacter = character;
+        }
+        
+        public void ChangeCurrentDate(DateChar dateCharacter)
+        {
+            m_CharSelected = true;
+            
+            m_DateChar = dateCharacter;
             
             NextScene();
         }
