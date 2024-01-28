@@ -11,6 +11,9 @@ public class NextUI : MonoBehaviour
 {
     [SerializeField] 
     private Button m_NextButton;
+    
+    [SerializeField]
+    private Image m_MechanicFeedbackBackground;
 
     private UIAlphaAnim m_translateAnim;
     
@@ -19,6 +22,12 @@ public class NextUI : MonoBehaviour
         m_translateAnim = GetComponentInChildren<UIAlphaAnim>();
         m_NextButton.onClick.RemoveAllListeners();
         m_NextButton.onClick.AddListener(OnNextButtonClicked);
+    }
+
+    public void EnableMechanicFeedbackBackground(Sprite sprite)
+    {
+        m_MechanicFeedbackBackground.sprite = sprite;
+        m_MechanicFeedbackBackground.enabled = true;
     }
 
     private void OnEnable()
@@ -35,6 +44,7 @@ public class NextUI : MonoBehaviour
         m_translateAnim.FadeOut();
         Conditional.Wait(1).Do(() =>
         {
+            m_MechanicFeedbackBackground.enabled = false;
             this.gameObject.SetActive(false);
         });
 

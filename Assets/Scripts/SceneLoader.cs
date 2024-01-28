@@ -46,7 +46,7 @@ public class SceneLoader : MonoBehaviour
         {
             m_LastScene = SceneName.IntroScene;
 
-            StartCoroutine(LoadScene(SceneName.FirstScene));
+            StartCoroutine(LoadScene(SceneName.CharacterSelectionScene));
         }
         
         public IEnumerator LoadScene(SceneName sceneName)
@@ -138,5 +138,6 @@ public class SceneLoader : MonoBehaviour
         Null,
         FirstScene,
         EatingScene,
-        WineScene
+        WineScene,
+        CharacterSelectionScene
     }
