@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using CharacterImplementations;
-using GameManager;
+using Roro.Scripts.GameManagement;
 
 public class EatingCharacter : MonoBehaviour
 {
@@ -16,7 +17,8 @@ public class EatingCharacter : MonoBehaviour
     void Start()
     {
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.sprite = m_CurrentCharacter.OpenMouseAnimationSprites;
+        //all the sprites are list, to avoid confusion, use First() to get the first sprite in the list if it is a single sprite
+        spriteRenderer.sprite = m_CurrentCharacter.OpenMouseAnimationSprites.First();
     }
 
     // Update is called once per frame
