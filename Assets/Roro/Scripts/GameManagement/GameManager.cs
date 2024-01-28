@@ -220,7 +220,7 @@ namespace Roro.Scripts.GameManagement
                 m_Timer = 0;
             }
             
-            UpdateTimerUI();
+            //UpdateTimerUI();
 
             if (m_Timer >= 60f)
             {
