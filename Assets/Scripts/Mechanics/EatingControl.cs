@@ -61,6 +61,7 @@ public class EatingControl : MonoBehaviour
         // Load Chewing Animation
         // Load Happy Animation
         // Win Condition
+        
         using var evt = MechanicResultEvent.Get(true);
         evt.SendGlobal();
         GetComponent<EatingControl>().enabled = false;

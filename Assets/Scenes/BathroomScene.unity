@@ -496,6 +496,7 @@ MonoBehaviour:
     SerializationNodes: []
   m_BackgroundImage: {fileID: 1412344002}
   m_CharacterMovement: {fileID: 655172118}
+  m_PeeSoud: {fileID: 11400000, guid: 719e21f0bf87b094db8765cb6f0a6f81, type: 2}
   m_BackgroundSprites:
   - {fileID: 21300000, guid: 594fe0efbcd3c1f4286928f4044e455a, type: 3}
   - {fileID: 21300000, guid: 31b55a5f09b788c4e85d586824383305, type: 3}
