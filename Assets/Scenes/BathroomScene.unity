@@ -182,7 +182,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 667d18d21a91d46a6b5ae64fdb20c194, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -203,7 +203,7 @@ Transform:
   m_GameObject: {fileID: 655172115}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -6.69, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -221,7 +221,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 881edeea5c8fcde4bb3bc14923c9a42a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Speed: 2
+  m_Speed: 5
+  CanMove: 0
 --- !u!61 &655172119
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -286,7 +287,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &695121912
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -494,6 +495,7 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   m_BackgroundImage: {fileID: 1412344002}
+  m_CharacterMovement: {fileID: 655172118}
   m_BackgroundSprites:
   - {fileID: 21300000, guid: 594fe0efbcd3c1f4286928f4044e455a, type: 3}
   - {fileID: 21300000, guid: 31b55a5f09b788c4e85d586824383305, type: 3}

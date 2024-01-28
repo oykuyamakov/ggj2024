@@ -10,6 +10,7 @@ using Sirenix.OdinInspector;
 using TMPro;
 using UnityCommon.Modules;
 using UnityCommon.Runtime.UI;
+using UnityCommon.Runtime.UI.Animations;
 using UnityCommon.Singletons;
 using UnityCommon.Variables;
 using UnityEngine;
@@ -39,6 +40,12 @@ namespace Roro.Scripts.GameManagement
         [SerializeField]
         private TextMeshProUGUI m_TimerText;
         
+        [SerializeField]
+        private Canvas m_SceneInfoCanvas;
+        
+        [SerializeField]
+        private UITranslateAnim m_SceneInfoCanvasTranslateAnim;
+        
         private float m_Timer = 0f;
         
         private bool m_OnSwitchToNextScene = false;
@@ -54,7 +61,7 @@ namespace Roro.Scripts.GameManagement
             SceneName.FirstScene,
             SceneName.SubwayScene,
             SceneName.BathroomScene,
-            SceneName.EatScene,
+            SceneName.EatingScene,
             SceneName.WalkingScene,
             SceneName.SubwayScene,
             SceneName.WineScene,
@@ -90,7 +97,9 @@ namespace Roro.Scripts.GameManagement
             m_GameIsRunning.Value = true;
             
             GEM.AddListener<MechanicResultEvent>(OnMechanicResultEvent);
-            
+
+            m_TimerText.enabled = false;
+
         }
 
         private void OnDestroy()
@@ -138,10 +147,33 @@ namespace Roro.Scripts.GameManagement
             
             NextScene();
         }
+
+        private void EnableSceneInfoCanvas()
+        {
+            m_SceneInfoCanvas.enabled = true;
+            m_SceneInfoCanvasTranslateAnim.FadeIn();
+            
+            Conditional.Wait(5).Do(() =>
+            {
+                m_SceneInfoCanvasTranslateAnim.FadeOut();
+                Conditional.Wait(1).Do(() =>
+                {
+                    m_SceneInfoCanvas.enabled = false;
+                    
+                    m_Timer = 0;
+                    m_TimerText.enabled = true;
+
+                    m_OnSwitchToNextScene = false;
+                    
+                });
+            });
+        }
         
 
         public void NextScene()
         {
+            m_TimerText.enabled = false;
+            
             m_CurrentSceneIndex++;
             
             if(m_CurrentSceneIndex >= m_ScenesByOrder.Count)
@@ -150,13 +182,10 @@ namespace Roro.Scripts.GameManagement
             FadeInOut.Instance.DoTransition(() =>
             {
                 StartCoroutine(SceneLoader.Instance.LoadScene(m_ScenesByOrder[m_CurrentSceneIndex]));
-
-                Conditional.Wait(2).Do(() =>
-                {
-                    m_Timer = 0;
-                    m_OnSwitchToNextScene = false;
-                });
-            }, 1f, Color.black);
+                
+                EnableSceneInfoCanvas();
+               
+            }, 3f, Color.black);
             
         }
         private void Update()
