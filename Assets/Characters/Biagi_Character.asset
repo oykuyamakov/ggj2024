@@ -19,8 +19,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b60b39865a7ff4c2886a9600dad0b632, type: 3}
   - {fileID: 21300000, guid: 2f94afac0ecd84d8c9692ac26611c143, type: 3}
   m_IdleLeftAnimationSprites:
-  - {fileID: 21300000, guid: 3779e0fbd96da452ebec106213d2fa00, type: 3}
-  - {fileID: 21300000, guid: b1a723ee8a74644968a9d784e954a1cf, type: 3}
+  - {fileID: 21300000, guid: 150152f54e56a409f86e9a2c495c3570, type: 3}
+  - {fileID: 21300000, guid: f2e685e7cba7f404db45a0ed36c33584, type: 3}
   m_WalkBackAnimationSprites:
   - {fileID: 21300000, guid: d4bf51b35ff454208ab91a0226d09ebf, type: 3}
   - {fileID: 21300000, guid: 8a957c68619f24b909961d927f888544, type: 3}
@@ -28,8 +28,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 3fc9aec5d734e4b7893884cd8c209782, type: 3}
   - {fileID: 21300000, guid: 42a7af28f4e004d4eae7ee6b4176fd33, type: 3}
   m_WalkLeftAnimationSprites:
-  - {fileID: 21300000, guid: d9eaf35eb7e74448abd08fdb6427b645, type: 3}
-  - {fileID: 21300000, guid: 8b6b210ccc03743e495bf923f6b49548, type: 3}
+  - {fileID: 21300000, guid: 0314d6ada81b04fcaaedb328eb6347a2, type: 3}
+  - {fileID: 21300000, guid: 505b0a152e00d4023845022b37b6475a, type: 3}
   m_EatingAnimationSprites:
   - {fileID: 21300000, guid: e0f903cdc56db485cb57bad3b4e26dd9, type: 3}
   - {fileID: 21300000, guid: ea77ab17ce48843a4916fbaa5395c952, type: 3}
