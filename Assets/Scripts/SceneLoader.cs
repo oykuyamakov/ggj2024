@@ -39,6 +39,11 @@ public class SceneLoader : MonoBehaviour
 
             yield return new WaitForSeconds(2);
             
+            LoadFirstScene();
+        }
+        
+        public void LoadFirstScene()
+        {
             m_LastScene = SceneName.IntroScene;
 
             StartCoroutine(LoadScene(SceneName.FirstScene));

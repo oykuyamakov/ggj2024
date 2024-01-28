@@ -12,26 +12,20 @@ public class NextCanvas : MonoBehaviour
     [SerializeField] 
     private Button m_NextButton;
 
-    private UITranslateAnim m_translateAnim;
-
-    private Canvas m_Canvas;
-
+    private UIAlphaAnim m_translateAnim;
+    
     private void Awake()
     {
-        m_Canvas = GetComponent<Canvas>();
-        m_translateAnim = GetComponentInChildren<UITranslateAnim>();
+        m_translateAnim = GetComponentInChildren<UIAlphaAnim>();
         m_NextButton.onClick.RemoveAllListeners();
         m_NextButton.onClick.AddListener(OnNextButtonClicked);
     }
 
     private void OnEnable()
     {
-        Debug.Log("Hi");
-        
         m_translateAnim.FadeIn();
         
         m_NextButton.enabled = true;
-        
     }
 
     private void OnNextButtonClicked()
