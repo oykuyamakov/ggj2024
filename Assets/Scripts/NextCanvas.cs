@@ -19,7 +19,7 @@ public class NextCanvas : MonoBehaviour
     private void Awake()
     {
         m_Canvas = GetComponent<Canvas>();
-        m_translateAnim = GetComponent<UITranslateAnim>();
+        m_translateAnim = GetComponentInChildren<UITranslateAnim>();
         m_NextButton.onClick.RemoveAllListeners();
         m_NextButton.onClick.AddListener(OnNextButtonClicked);
     }

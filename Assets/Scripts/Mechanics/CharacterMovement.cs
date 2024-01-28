@@ -22,6 +22,8 @@ public class CharacterMovement : MonoBehaviour
 
     private Vector3 m_InitPos;
 
+    private float m_Limit = 8.58f;
+
     private void Awake()
     {
         m_InitPos = transform.position;
@@ -121,11 +123,11 @@ public class CharacterMovement : MonoBehaviour
                 transform.localScale += new Vector3(0.3f, 0.3f, 0.3f) * Time.deltaTime;
             }
         }
-        else if (Input.GetKey(KeyCode.A))
+        else if (Input.GetKey(KeyCode.A) && transform.position.x > -m_Limit)
         {
             transform.position += Vector3.left * (Time.deltaTime * m_Speed);
         }
-        else if (Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(KeyCode.D) && transform.position.x < m_Limit)
         {
             transform.position += Vector3.right * (Time.deltaTime * m_Speed);
         }

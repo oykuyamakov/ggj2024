@@ -48,7 +48,7 @@ public class BathroomSceneManager : SingletonBehaviour<BathroomSceneManager>
         
         if(borderTrigger.BorderType == BorderType.Middle)
         {
-            if (m_CurrentBackgroundIndex != 2 && m_CharacterMovement.transform.localScale.y < 0.7f)
+            if (m_CurrentBackgroundIndex != 2 || m_CharacterMovement.transform.localScale.y < 0.7f)
             {
                 return;
             }
@@ -66,10 +66,10 @@ public class BathroomSceneManager : SingletonBehaviour<BathroomSceneManager>
     {
         if (m_CurrentBackgroundIndex > 3)
         {
+            m_CharacterMovement.CanMove = false;
+            
             Conditional.Wait(2).Do(() =>
             {
-                m_CharacterMovement.CanMove = false;
-                
                 GameManager.instance.EnableNextCanvas();
             });
             

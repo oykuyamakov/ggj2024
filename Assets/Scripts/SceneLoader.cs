@@ -132,6 +132,6 @@ public class SceneLoader : MonoBehaviour
         WalkingScene,
         Null,
         FirstScene,
-        EatScene,
+        EatingScene,
         WineScene
     }
