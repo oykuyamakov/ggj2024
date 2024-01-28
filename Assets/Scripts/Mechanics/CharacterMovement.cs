@@ -2,30 +2,38 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using CharacterImplementations;
+using Roro.Scripts.GameManagement;
 using UnityCommon.Runtime.Extensions;
 using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour
 {
-    [SerializeField]
-    List<Character> m_Characters;
     
     [SerializeField]
+    private float m_Speed = 2f;
+
     private Character m_CurrentCharacter;
 
     private List<Sprite> m_CurrentAnim;
     
     private WalkDir m_CurrentWalkDir = WalkDir.Down;
+    
+    public bool CanMove = false;
 
     private void Awake()
     {
-        m_CurrentCharacter = m_Characters[0];
+        CanMove = true;
+        
+        m_CurrentCharacter = GameManager.Instance.CurrentCharacter;
         
         m_CurrentAnim = m_CurrentCharacter.IdleAnimationSprites;
     }
 
     private void Update()
     {
+        if(!CanMove)
+            return;
+        
         ControlChar();
         
         if (Input.GetKey(KeyCode.S))
@@ -104,18 +112,12 @@ public class CharacterMovement : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.A))
         {
-            transform.position += Vector3.left * Time.deltaTime;
+            transform.position += Vector3.left * (Time.deltaTime * m_Speed);
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            transform.position += Vector3.right * Time.deltaTime;
+            transform.position += Vector3.right * (Time.deltaTime * m_Speed);
         }
-    }
-    
-    
-    private void OnTriggerEnter(Collider other)
-    {
-        throw new NotImplementedException();
     }
 }
 

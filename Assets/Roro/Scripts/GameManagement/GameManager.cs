@@ -1,16 +1,19 @@
 using System;
 using System.Collections.Generic;
+using CharacterImplementations;
 using Events;
 using MechanicEvents;
 using Roro.Scripts.Serialization;
 using Roro.Scripts.Sounds.Core;
 using Roro.Scripts.Utility;
 using Sirenix.OdinInspector;
+using TMPro;
 using UnityCommon.Modules;
 using UnityCommon.Runtime.UI;
 using UnityCommon.Singletons;
 using UnityCommon.Variables;
 using UnityEngine;
+using UnityEngine.UI;
 using Utility;
 
 namespace Roro.Scripts.GameManagement
@@ -29,6 +32,18 @@ namespace Roro.Scripts.GameManagement
 
         [SerializeField] 
         private GameObject m_NextCanvas;
+
+        [SerializeField] 
+        private Character m_CurrentCharacter;
+        
+        [SerializeField]
+        private TextMeshProUGUI m_TimerText;
+        
+        private float m_Timer = 0f;
+        
+        private bool m_OnSwitchToNextScene = false;
+        
+        public Character CurrentCharacter => m_CurrentCharacter;
         
         public int CurrentSceneIndex => m_CurrentSceneIndex;
         
@@ -100,8 +115,7 @@ namespace Roro.Scripts.GameManagement
         {
             m_NextCanvas.SetActive(true);
         }
-
-
+        
         private void OnGameOver()
         {
             
@@ -136,8 +150,29 @@ namespace Roro.Scripts.GameManagement
             FadeInOut.Instance.DoTransition(() =>
             {
                 StartCoroutine(SceneLoader.Instance.LoadScene(m_ScenesByOrder[m_CurrentSceneIndex]));
+
+                Conditional.Wait(2).Do(() =>
+                {
+                    m_Timer = 0;
+                    m_OnSwitchToNextScene = false;
+                });
             }, 1f, Color.black);
             
+        }
+        private void Update()
+        {
+            if (!m_OnSwitchToNextScene)
+            {
+                m_Timer += Time.deltaTime;
+            
+                m_TimerText.text = m_Timer.ToString("F2");
+            }
+
+            if (m_Timer >= 60f)
+            {
+                m_OnSwitchToNextScene = true;
+                EnableNextCanvas();
+            }
         }
         
     }
