@@ -36,6 +36,15 @@ public class EatingControl : MonoBehaviour
         // Approach the mouse position
         Vector3 directionToMouse = mousePosition - transform.position;
         transform.Translate(directionToMouse.normalized * moveSpeed * Time.deltaTime);
+
+        if (transform.position.y <= -4f)
+        {
+            //Load DroppingFood Animation
+            //Load Sad Animation
+            //Lose Condition
+            GetComponent<EatingControl>().enabled = false;
+            Debug.Log("No!!!");
+        }
     }
 
     void SetRandomMovement()
@@ -55,6 +64,9 @@ public class EatingControl : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         //Load Chewing Animation
+        //Load Happy Animation
+        //Win Condition
+        GetComponent<EatingControl>().enabled = false;
         Debug.Log("Yum!");
     }
 }
