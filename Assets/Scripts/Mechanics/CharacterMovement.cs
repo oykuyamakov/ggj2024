@@ -1,50 +1,79 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using CharacterImplementations;
+using UnityCommon.Runtime.Extensions;
 using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour
 {
     [SerializeField]
-    private List<Sprite> m_IdleAnimationSprites;
+    List<Character> m_Characters;
+    
     [SerializeField]
-    private List<Sprite> m_WalkAnimationSprites;
-    [SerializeField]
-    private List<Sprite> m_WalkBackAnimationSprites;
-    [SerializeField]
-    private List<Sprite> m_WalkFrontAnimationSprites;
+    private Character m_CurrentCharacter;
 
     private List<Sprite> m_CurrentAnim;
+    
+    private WalkDir m_CurrentWalkDir = WalkDir.Down;
 
     private void Awake()
     {
-        m_CurrentAnim = m_IdleAnimationSprites;
+        m_CurrentCharacter = m_Characters[0];
+        
+        m_CurrentAnim = m_CurrentCharacter.IdleAnimationSprites;
     }
 
     private void Update()
     {
         ControlChar();
         
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.S))
         {
-            m_CurrentAnim = m_WalkFrontAnimationSprites;
+            m_CurrentWalkDir = WalkDir.Up;
+            
+            m_CurrentAnim = m_CurrentCharacter.WalkFrontAnimationSprites;
         }
-        else if (Input.GetKey(KeyCode.S))
+        else if (Input.GetKey(KeyCode.W))
         {
-            m_CurrentAnim = m_WalkBackAnimationSprites;
+            m_CurrentWalkDir = WalkDir.Down;
+            
+            m_CurrentAnim = m_CurrentCharacter.WalkBackAnimationSprites;
         }
         else if (Input.GetKey(KeyCode.A))
         {
-            m_CurrentAnim = m_WalkAnimationSprites;
+            m_CurrentWalkDir = WalkDir.Left;
+            
+            m_CurrentAnim = m_CurrentCharacter.WalkLeftAnimationSprites;
+            
+            transform.localScale = transform.localScale.WithX(1);
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            m_CurrentAnim = m_WalkAnimationSprites;
-            transform.localScale = new Vector3(-1, 1, 1);
+            m_CurrentWalkDir = WalkDir.Right;
+            
+            m_CurrentAnim = m_CurrentCharacter.WalkLeftAnimationSprites;
+            transform.localScale = transform.localScale.WithX(-1);
         }
         else
         {
-            m_CurrentAnim = m_IdleAnimationSprites;
+            switch (m_CurrentWalkDir)
+            {
+                case WalkDir.Right:
+                    m_CurrentAnim =m_CurrentCharacter.IdleLeftAnimationSprites;
+                    break;
+                case WalkDir.Left:
+                    m_CurrentAnim =m_CurrentCharacter.IdleLeftAnimationSprites;
+                    break;
+                case WalkDir.Up:
+                    m_CurrentAnim =m_CurrentCharacter.IdleBackAnimationSprites;
+                    break;
+                case WalkDir.Down:
+                    m_CurrentAnim =m_CurrentCharacter.IdleAnimationSprites;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
         
         Animate();
@@ -52,7 +81,7 @@ public class CharacterMovement : MonoBehaviour
     
     private void Animate()
     {
-        int index = (int) (Time.time * 10) % m_CurrentAnim.Count;
+        int index = (int) (Time.time * 5) % m_CurrentAnim.Count;
         GetComponent<SpriteRenderer>().sprite = m_CurrentAnim[index];
     }
 
@@ -60,18 +89,18 @@ public class CharacterMovement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.W))
         {
-            if (transform.localScale.x > 0.5f)
-            {
-                transform.localScale -= new Vector3(0.1f, 0.1f, 0.1f) * Time.deltaTime;
-            }
+            // if (transform.localScale.x > 0.5f)
+            // {
+                transform.localScale -= new Vector3(0.3f, 0.3f, 0.3f) * Time.deltaTime;
+            //}
             
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            if (transform.localScale.x < 1f)
-            {
-                transform.localScale += new Vector3(0.1f, 0.1f, 0.1f) * Time.deltaTime;
-            }
+            // if (transform.localScale.x < 1f)
+            // {
+                transform.localScale += new Vector3(0.3f, 0.3f, 0.3f) * Time.deltaTime;
+            //}
         }
         else if (Input.GetKey(KeyCode.A))
         {
@@ -88,4 +117,12 @@ public class CharacterMovement : MonoBehaviour
     {
         throw new NotImplementedException();
     }
+}
+
+public enum WalkDir
+{
+    Right,
+    Left,
+    Up,
+    Down
 }
