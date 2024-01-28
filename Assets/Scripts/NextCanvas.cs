@@ -29,6 +29,9 @@ public class NextCanvas : MonoBehaviour
         Debug.Log("Hi");
         
         m_translateAnim.FadeIn();
+        
+        m_NextButton.enabled = true;
+        
     }
 
     private void OnNextButtonClicked()

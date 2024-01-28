@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Roro.Scripts.GameManagement;
 using UnityCommon.Modules;
+using UnityCommon.Runtime.UI;
 using UnityCommon.Singletons;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -47,7 +48,7 @@ public class BathroomSceneManager : SingletonBehaviour<BathroomSceneManager>
         
         if(borderTrigger.BorderType == BorderType.Middle)
         {
-            if (m_CurrentBackgroundIndex != 2)
+            if (m_CurrentBackgroundIndex != 2 && m_CharacterMovement.transform.localScale.y < 0.7f)
             {
                 return;
             }
@@ -74,8 +75,15 @@ public class BathroomSceneManager : SingletonBehaviour<BathroomSceneManager>
             
             return;
         }
+        
+        FadeInOut.Instance.DoTransition(() =>
+        {
+            m_CharacterMovement.ResetPos();
+            
+            m_BackgroundImage.sprite = m_BackgroundSprites[m_CurrentBackgroundIndex];
+               
+        }, 1f, Color.black);
        
-        m_BackgroundImage.sprite = m_BackgroundSprites[m_CurrentBackgroundIndex];
     }
     
 }

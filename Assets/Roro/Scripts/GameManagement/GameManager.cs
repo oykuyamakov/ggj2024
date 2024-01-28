@@ -142,21 +142,27 @@ namespace Roro.Scripts.GameManagement
 
         public void NextScene()
         {
+            m_TimerText.enabled = false;
+            
             m_CurrentSceneIndex++;
             
             if(m_CurrentSceneIndex >= m_ScenesByOrder.Count)
                 m_CurrentSceneIndex = 0;
             
+            Conditional.Wait(2.9f).Do(() =>
+            {
+                m_Timer = 0;
+                m_TimerText.enabled = true;
+
+                m_OnSwitchToNextScene = false;
+            });
+            
             FadeInOut.Instance.DoTransition(() =>
             {
                 StartCoroutine(SceneLoader.Instance.LoadScene(m_ScenesByOrder[m_CurrentSceneIndex]));
 
-                Conditional.Wait(2).Do(() =>
-                {
-                    m_Timer = 0;
-                    m_OnSwitchToNextScene = false;
-                });
-            }, 1f, Color.black);
+               
+            }, 3f, Color.black);
             
         }
         private void Update()

@@ -20,13 +20,22 @@ public class CharacterMovement : MonoBehaviour
     
     public bool CanMove = false;
 
+    private Vector3 m_InitPos;
+
     private void Awake()
     {
+        m_InitPos = transform.position;
+        
         CanMove = true;
         
         m_CurrentCharacter = GameManager.Instance.CurrentCharacter;
         
         m_CurrentAnim = m_CurrentCharacter.IdleAnimationSprites;
+    }
+    
+    public void ResetPos()
+    {
+        transform.position = m_InitPos;
     }
 
     private void Update()
@@ -54,14 +63,14 @@ public class CharacterMovement : MonoBehaviour
             
             m_CurrentAnim = m_CurrentCharacter.WalkLeftAnimationSprites;
             
-            transform.localScale = transform.localScale.WithX(1);
+            transform.localScale = transform.localScale.WithX( Math.Abs(transform.localScale.x));
         }
         else if (Input.GetKey(KeyCode.D))
         {
             m_CurrentWalkDir = WalkDir.Right;
             
             m_CurrentAnim = m_CurrentCharacter.WalkLeftAnimationSprites;
-            transform.localScale = transform.localScale.WithX(-1);
+            transform.localScale = transform.localScale.WithX(-Math.Abs(transform.localScale.x));
         }
         else
         {
@@ -74,10 +83,10 @@ public class CharacterMovement : MonoBehaviour
                     m_CurrentAnim =m_CurrentCharacter.IdleLeftAnimationSprites;
                     break;
                 case WalkDir.Up:
-                    m_CurrentAnim =m_CurrentCharacter.IdleBackAnimationSprites;
+                    m_CurrentAnim =m_CurrentCharacter.IdleAnimationSprites;
                     break;
                 case WalkDir.Down:
-                    m_CurrentAnim =m_CurrentCharacter.IdleAnimationSprites;
+                    m_CurrentAnim =m_CurrentCharacter.IdleBackAnimationSprites;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -97,18 +106,20 @@ public class CharacterMovement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.W))
         {
-            // if (transform.localScale.x > 0.5f)
-            // {
+            if (transform.localScale.y > 0.3f)
+            {
+                transform.localScale = transform.localScale.WithX(Math.Abs(transform.localScale.x));
                 transform.localScale -= new Vector3(0.3f, 0.3f, 0.3f) * Time.deltaTime;
-            //}
+            }
             
         }
         else if (Input.GetKey(KeyCode.S))
         {
-            // if (transform.localScale.x < 1f)
-            // {
+            if (transform.localScale.y < 2f)
+            {
+                transform.localScale = transform.localScale.WithX(Math.Abs(transform.localScale.x));
                 transform.localScale += new Vector3(0.3f, 0.3f, 0.3f) * Time.deltaTime;
-            //}
+            }
         }
         else if (Input.GetKey(KeyCode.A))
         {
