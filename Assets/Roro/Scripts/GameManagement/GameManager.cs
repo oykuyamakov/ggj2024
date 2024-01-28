@@ -111,6 +111,7 @@ namespace Roro.Scripts.GameManagement
 
         private List<SceneName> m_ScenesByOrder = new List<SceneName>()
         {
+            SceneName.CharacterSelectionScene,
             SceneName.FirstScene,
             SceneName.SubwayScene,
             SceneName.BathroomScene,
@@ -312,6 +313,13 @@ namespace Roro.Scripts.GameManagement
                 m_TimerCanvas.enabled = false;
                 m_TimerAlphaAnim.FadeOut();
             }
+        }
+
+        public void ChangeCurrentCharacter(Character character)
+        {
+            m_CurrentCharacter = character;
+            
+            NextScene();
         }
 
         
