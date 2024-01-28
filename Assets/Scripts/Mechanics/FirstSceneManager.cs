@@ -21,6 +21,7 @@ public class FirstSceneManager : MonoBehaviour
            m_VideoPlayer.Play();
         }
 
-        Conditional.Wait(3).Do(GameManager.Instance.EnableNextCanvas);
+        //Conditional.Wait((float)m_VideoPlayer.clip.length).Do(GameManager.Instance.NextScene);
+        Conditional.Wait(1).Do(GameManager.Instance.EnableNextCanvas);
     }
 }

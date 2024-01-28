@@ -26,6 +26,8 @@ public class NextCanvas : MonoBehaviour
 
     private void OnEnable()
     {
+        Debug.Log("Hi");
+        
         m_translateAnim.FadeIn();
     }
 
@@ -36,7 +38,7 @@ public class NextCanvas : MonoBehaviour
         m_translateAnim.FadeOut();
         Conditional.Wait(1).Do(() =>
         {
-            m_Canvas.enabled = false;
+            this.gameObject.SetActive(false);
         });
 
     }
