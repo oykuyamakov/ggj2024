@@ -61,7 +61,8 @@ namespace Roro.Scripts.GameManagement
         
         [SerializeField]
         private UIAlphaAnim m_SceneInfoPanelAlphaAnim;
-        
+        [SerializeField]
+        private List<Sprite> m_IntroSceneInfos;
         [SerializeField]
         private List<Sprite> m_SubwaySceneInfos;
         [SerializeField]
@@ -235,13 +236,15 @@ namespace Roro.Scripts.GameManagement
             {
                 case SceneName.SubwayScene:
                     m_SceneInfoImage.sprite = m_CurrentSceneIndex < 3 ? m_SubwaySceneInfos[0] : m_Subway2SceneInfos[0];
+                    break; 
+                case SceneName.FirstScene:
+                    m_SceneInfoImage.sprite = m_IntroSceneInfos[0];
                     break;
                 case SceneName.BathroomScene:
                     m_SceneInfoImage.sprite = m_BathroomSceneInfos[0];
                     break;
                 case SceneName.EatingScene:
                     m_SceneInfoImage.sprite = m_EatingSceneInfos[0];
-                    break;
                     break;
                 case SceneName.WineScene:
                     m_SceneInfoImage.sprite = m_WineSceneInfos[0];

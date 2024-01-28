@@ -1,3 +1,5 @@
+using Events;
+using MechanicEvents;
 using UnityEngine;
 
 public class FadeOnMouseMove2D : MonoBehaviour
@@ -29,6 +31,9 @@ public class FadeOnMouseMove2D : MonoBehaviour
                 if (color.a == 0)
                 {
                     isFullyTransparent = true; // Set to true when sprite is fully transparent
+                    
+                    using var evt = MechanicResultEvent.Get(true);
+                    evt.SendGlobal();
                 }
             }
 

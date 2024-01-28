@@ -21,6 +21,9 @@ EditorBuildSettings:
     path: Assets/Scenes/TransitionScene.unity
     guid: 26a531dbaccfecb43972860da5a98a49
   - enabled: 1
+    path: Assets/Scenes/StainScene.unity
+    guid: 7367f7f50e429ed47b2e86e95895ceb8
+  - enabled: 1
     path: Assets/Scenes/WineScene.unity
     guid: a25a0fb253d5af444a4d90efba1e8c8d
   - enabled: 1

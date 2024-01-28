@@ -36,7 +36,7 @@ namespace Mechanics
         private bool m_IsBarActive;
         private void Start()
         {
-            Conditional.Wait(4).Do(() =>
+            Conditional.Wait(7).Do(() =>
             {
                 m_IsBarActive = true;
             });

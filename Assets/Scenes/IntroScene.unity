@@ -179,6 +179,8 @@ MonoBehaviour:
   m_SceneInfoCanvas: {fileID: 853211005}
   m_SceneInfoImage: {fileID: 1265804168}
   m_SceneInfoPanelAlphaAnim: {fileID: 1265804170}
+  m_IntroSceneInfos:
+  - {fileID: 21300000, guid: 2fab09c2053b17a46aae4c53ba423f84, type: 3}
   m_SubwaySceneInfos:
   - {fileID: 21300000, guid: 6d7a2bcc1049648eca9d69b04f6419f5, type: 3}
   m_BathroomSceneInfos:

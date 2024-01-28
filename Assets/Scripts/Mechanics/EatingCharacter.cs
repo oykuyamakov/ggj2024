@@ -11,17 +11,27 @@ public class EatingCharacter : MonoBehaviour
 {
     private Character m_CurrentCharacter;
 
+    [SerializeField] 
+    private SpriteRenderer m_SpriteRenderer;
+
     private void Awake()
     {
         m_CurrentCharacter = GameManager.Instance.CurrentCharacter;
+        
+        Debug.Log("wtf is wrong amk");
+        
+        //all the sprites are list, to avoid confusion, use First() to get the first sprite in the list if it is a single sprite
+        m_SpriteRenderer.sprite = m_CurrentCharacter.OpenMouseAnimationSprites.First();
+        
+        Debug.Log(m_CurrentCharacter.name);
+        
+        AnimateEat();
+
     }
 
     void Start()
     {
-        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-        //all the sprites are list, to avoid confusion, use First() to get the first sprite in the list if it is a single sprite
-        spriteRenderer.sprite = m_CurrentCharacter.OpenMouseAnimationSprites.First();
-
+       
         //Conditional.Wait(15).Do(AnimateEat);
     }
 
@@ -41,7 +51,7 @@ public class EatingCharacter : MonoBehaviour
                 return;
             }
             int index = (int) (Time.time * 5) % m_CurrentCharacter.EatingAnimationSprites.Count;
-            GetComponent<SpriteRenderer>().sprite = m_CurrentCharacter.EatingAnimationSprites[index];
+            m_SpriteRenderer.sprite = m_CurrentCharacter.EatingAnimationSprites[index];
         });
     }
     

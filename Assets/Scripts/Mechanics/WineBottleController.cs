@@ -1,3 +1,5 @@
+using Events;
+using MechanicEvents;
 using UnityEngine;
 
 public class WineBottleController : MonoBehaviour
@@ -100,6 +102,9 @@ public class WineBottleController : MonoBehaviour
         {
             //InstantiateObjectAtScreenCenter();
             Destroy(gameObject); // Destroy the bottle
+            
+            using var evt = MechanicResultEvent.Get(true);
+            evt.SendGlobal();
         }
     }
 
