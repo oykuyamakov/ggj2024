@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Events;
+using MechanicEvents;
+using Mechanics;
+using Roro.Scripts.GameManagement;
 
 public class EatingControl : MonoBehaviour
 {
@@ -10,6 +14,8 @@ public class EatingControl : MonoBehaviour
     private float timer;
     private Vector3 randomDirection;
     private Vector3 mousePosition;
+
+  
 
     void Start()
     {
@@ -66,6 +72,8 @@ public class EatingControl : MonoBehaviour
         //Load Chewing Animation
         //Load Happy Animation
         //Win Condition
+        using var evt = MechanicResultEvent.Get(true);
+        evt.SendGlobal();
         GetComponent<EatingControl>().enabled = false;
         Debug.Log("Yum!");
     }
