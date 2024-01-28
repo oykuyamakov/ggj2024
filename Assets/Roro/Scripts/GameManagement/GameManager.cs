@@ -28,26 +28,37 @@ namespace Roro.Scripts.GameManagement
         private IntVariable m_LiveVar;
 
         [SerializeField] 
-        private GameObject m_NextCanvas;
-
-        [SerializeField] 
         private Character m_CurrentCharacter;
+
+        #region UI
         
-        [SerializeField]
-        private TextMeshProUGUI m_TimerText;
+        //Next UI
+        
+        [SerializeField] 
+        private GameObject m_NextUI;
+
+        //Timer UI
+        
+        [SerializeField] 
+        private Canvas m_TimerCanvas;
+        
+        [SerializeField] 
+        private Image m_TimerImage;
+        
+        [SerializeField] 
+        private UIAlphaAnim m_TimerAlphaAnim;
+        
+        [SerializeField] 
+        private List<Sprite> m_TimerUIList;
+        
+        //Scene Info UI
         
         [SerializeField]
         private Canvas m_SceneInfoCanvas;
         
         [SerializeField]
-        private UITranslateAnim m_SceneInfoCanvasTranslateAnim;
-
-        [SerializeField] 
-        private List<Sprite> m_TimerUIList;
+        private UIAlphaAnim m_SceneInfoPanelAlphaAnim;
         
-        [SerializeField] 
-        private Image m_TimerImage;
-
         [SerializeField]
         private List<Sprite> m_SubwaySceneInfos;
         [SerializeField]
@@ -65,13 +76,36 @@ namespace Roro.Scripts.GameManagement
         [SerializeField] 
         private List<Sprite> m_SexSceneInfos;
         
+        // WIN LOOSE UI
+        
+        [SerializeField]
+        private Canvas m_WinLooseCanvas;
+        
+        [SerializeField]
+        private UIAlphaAnim m_WinLooseCanvasAlphaAnim;
+        
+        [SerializeField]
+        private Image m_WinLooseImage;
+
+        [SerializeField] 
+        private Sprite m_WinScreen;
+
+        [SerializeField] 
+        private Sprite m_LooseScreen;
+
+        [SerializeField] 
+        private GameObject m_IntroUI;
+
+        #endregion
+        
+        public Character CurrentCharacter => m_CurrentCharacter;
+        public int CurrentSceneIndex => m_CurrentSceneIndex;
+        
+        public BoolVariable GameIsRunning => m_GameIsRunning;
+        
         private float m_Timer = 0f;
         
         private bool m_OnSwitchToNextScene = false;
-        
-        public Character CurrentCharacter => m_CurrentCharacter;
-        
-        public int CurrentSceneIndex => m_CurrentSceneIndex;
         
         private int m_CurrentSceneIndex = 0;
 
@@ -88,8 +122,6 @@ namespace Roro.Scripts.GameManagement
             SceneName.SexScene
         };
         
-        public BoolVariable GameIsRunning => m_GameIsRunning;
-
         [Button]
         public void ToggleGame()
         {
@@ -117,9 +149,16 @@ namespace Roro.Scripts.GameManagement
             
             GEM.AddListener<MechanicResultEvent>(OnMechanicResultEvent);
 
-            m_TimerText.enabled = false;
-            m_TimerImage.enabled = false;
+            SetUpUIForStart();
+        }
 
+        private void SetUpUIForStart()
+        {
+            m_TimerCanvas.enabled = false;
+            m_NextUI.SetActive(false);
+            m_SceneInfoCanvas.enabled = false;
+            //m_WinLooseCanvas.enabled = false;
+            //m_IntroUI.SetActive(true);
         }
 
         private void OnDestroy()
@@ -138,24 +177,18 @@ namespace Roro.Scripts.GameManagement
                 OnFailedMechanic();
             }
         }
-
-        public void EnableNextCanvas()
-        {
-            m_NextCanvas.SetActive(true);
-        }
         
-        private void OnGameOver()
-        {
-            
-        }
-
         private void OnSuccessfulMechanic()
         {
-            NextScene();
+            m_OnSwitchToNextScene = true;
+            
+            EnableNextCanvas();
         }
 
         private void OnFailedMechanic()
         {
+            m_OnSwitchToNextScene = true;
+            
             m_LiveVar.Value--;
 
             if (m_LiveVar.Value <= 0)
@@ -164,39 +197,54 @@ namespace Roro.Scripts.GameManagement
                 return;
             }
             
-            NextScene();
+            EnableNextCanvas();
+        }
+
+        public void EnableNextCanvas()
+        {
+            m_NextUI.SetActive(true);
+        }
+        
+        private void OnGameOver()
+        {
+            //Loose UI
         }
 
         private void EnableSceneInfoCanvas()
         {
             m_SceneInfoCanvas.enabled = true;
-            m_SceneInfoCanvasTranslateAnim.FadeIn();
+            m_SceneInfoPanelAlphaAnim.FadeIn();
             
             Conditional.Wait(5).Do(() =>
             {
-                m_SceneInfoCanvasTranslateAnim.FadeOut();
+                m_SceneInfoPanelAlphaAnim.FadeOut();
                 
                 Conditional.Wait(1).Do(() =>
                 {
                     m_SceneInfoCanvas.enabled = false;
                     
                     m_Timer = 0;
-                    m_TimerText.enabled = true;
 
-                    m_OnSwitchToNextScene = false;
-                    
+                    if (m_CurrentSceneIndex > 1)
+                    {
+                        ToggleTimeUI(true);
+                        m_OnSwitchToNextScene = false;
+                    }
                 });
             });
         }
         
         public void NextScene()
         {
-            m_TimerText.enabled = false;
+            ToggleTimeUI(false);
             
             m_CurrentSceneIndex++;
-            
-            if(m_CurrentSceneIndex >= m_ScenesByOrder.Count)
-                m_CurrentSceneIndex = 0;
+
+            if (m_CurrentSceneIndex >= m_ScenesByOrder.Count)
+            {
+                //Win
+                return;
+            }
             
             FadeInOut.Instance.DoTransition(() =>
             {
@@ -212,48 +260,60 @@ namespace Roro.Scripts.GameManagement
             if (!m_OnSwitchToNextScene)
             {
                 m_Timer += Time.deltaTime;
-            
-                m_TimerText.text = m_Timer.ToString("F2");
+                UpdateTimerUI();
             }
             else
             {
                 m_Timer = 0;
             }
             
-            //UpdateTimerUI();
-
-            if (m_Timer >= 60f)
+            if (m_Timer >= 60f && !m_OnSwitchToNextScene)
             {
                 m_OnSwitchToNextScene = true;
-                EnableNextCanvas();
+                OnFailedMechanic();
             }
         }
 
         private void UpdateTimerUI()
         {
-            if (m_Timer == 0)
+            switch (m_Timer)
             {
-                m_TimerImage.enabled = false;
-                return;
-            }
-            
-            if (m_Timer < 30f)
-            {
-                m_TimerImage.sprite = m_TimerUIList[0];
-            }
-            else if(m_Timer < 60f)
-            {
-                m_TimerImage.sprite = m_TimerUIList[1];
-            }
-            else if(m_Timer < 90f)
-            {
-                m_TimerImage.sprite = m_TimerUIList[2];
-            }
-            else if (m_Timer < 120)
-            {
-                m_TimerImage.sprite = m_TimerUIList[3];
+                case 0:
+                    return;
+                case < 15f:
+                    m_TimerImage.sprite = m_TimerUIList[0];
+                    break;
+                case < 30f:
+                    m_TimerImage.sprite = m_TimerUIList[1];
+                    break;
+                case < 45f:
+                    m_TimerImage.sprite = m_TimerUIList[2];
+                    break;
+                case < 60:
+                    m_TimerImage.sprite = m_TimerUIList[3];
+                    break;
+                case < 75:
+                    m_TimerImage.sprite = m_TimerUIList[4];
+                    break;
             }
         }
+        
+        private void ToggleTimeUI(bool visible)
+        {
+            if (visible)
+            {
+                m_TimerImage.enabled = true;
+                m_TimerCanvas.enabled = true;
+                m_TimerAlphaAnim.FadeIn();
+            }
+            else
+            {
+                m_TimerImage.enabled = false;
+                m_TimerCanvas.enabled = false;
+                m_TimerAlphaAnim.FadeOut();
+            }
+        }
+
         
     }
 }
