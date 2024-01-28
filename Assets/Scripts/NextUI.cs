@@ -7,7 +7,7 @@ using UnityCommon.Runtime.UI.Animations;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NextCanvas : MonoBehaviour
+public class NextUI : MonoBehaviour
 {
     [SerializeField] 
     private Button m_NextButton;
