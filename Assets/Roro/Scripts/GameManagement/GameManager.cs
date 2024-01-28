@@ -41,6 +41,8 @@ namespace Roro.Scripts.GameManagement
         
         private float m_Timer = 0f;
         
+        private bool m_OnSwitchToNextScene = false;
+        
         public Character CurrentCharacter => m_CurrentCharacter;
         
         public int CurrentSceneIndex => m_CurrentSceneIndex;
@@ -113,8 +115,7 @@ namespace Roro.Scripts.GameManagement
         {
             m_NextCanvas.SetActive(true);
         }
-
-
+        
         private void OnGameOver()
         {
             
@@ -149,17 +150,29 @@ namespace Roro.Scripts.GameManagement
             FadeInOut.Instance.DoTransition(() =>
             {
                 StartCoroutine(SceneLoader.Instance.LoadScene(m_ScenesByOrder[m_CurrentSceneIndex]));
-                
-                m_Timer = 0f;
+
+                Conditional.Wait(2).Do(() =>
+                {
+                    m_Timer = 0;
+                    m_OnSwitchToNextScene = false;
+                });
             }, 1f, Color.black);
             
         }
-        
         private void Update()
         {
-            m_Timer += Time.deltaTime;
+            if (!m_OnSwitchToNextScene)
+            {
+                m_Timer += Time.deltaTime;
             
-            m_TimerText.text = m_Timer.ToString("F2");
+                m_TimerText.text = m_Timer.ToString("F2");
+            }
+
+            if (m_Timer >= 60f)
+            {
+                m_OnSwitchToNextScene = true;
+                EnableNextCanvas();
+            }
         }
         
     }

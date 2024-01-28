@@ -5,12 +5,16 @@ using Roro.Scripts.GameManagement;
 using UnityCommon.Modules;
 using UnityCommon.Singletons;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class BathroomSceneManager : SingletonBehaviour<BathroomSceneManager>
 {
     [SerializeField]
     private SpriteRenderer m_BackgroundImage;
+
+    [SerializeField] 
+    private CharacterMovement m_CharacterMovement;
     
     private void Awake()
     {
@@ -63,7 +67,8 @@ public class BathroomSceneManager : SingletonBehaviour<BathroomSceneManager>
         {
             Conditional.Wait(2).Do(() =>
             {
-                Debug.Log("ananii");
+                m_CharacterMovement.CanMove = false;
+                
                 GameManager.instance.EnableNextCanvas();
             });
             

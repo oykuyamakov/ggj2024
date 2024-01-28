@@ -18,10 +18,12 @@ public class CharacterMovement : MonoBehaviour
     
     private WalkDir m_CurrentWalkDir = WalkDir.Down;
     
-    public bool m_CanMove = false;
+    public bool CanMove = false;
 
     private void Awake()
     {
+        CanMove = true;
+        
         m_CurrentCharacter = GameManager.Instance.CurrentCharacter;
         
         m_CurrentAnim = m_CurrentCharacter.IdleAnimationSprites;
@@ -29,6 +31,9 @@ public class CharacterMovement : MonoBehaviour
 
     private void Update()
     {
+        if(!CanMove)
+            return;
+        
         ControlChar();
         
         if (Input.GetKey(KeyCode.S))
