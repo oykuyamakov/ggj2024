@@ -10,12 +10,10 @@ using Roro.Scripts.GameManagement;
 public class EatingControl : MonoBehaviour
 {
     public float moveSpeed;
-    public float moveTime;
-    private float timer;
-    private Vector3 randomDirection;
+    public float glitchSpeed;
+    public float glitchChance;
     private Vector3 mousePosition;
-
-  
+    private Vector3 moveDirection;
 
     void Start()
     {
@@ -25,58 +23,47 @@ public class EatingControl : MonoBehaviour
 
     void Update()
     {
-        // Move in the current direction
-        transform.Translate(randomDirection * moveSpeed * Time.deltaTime);
+        // Handle input for movement
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
+        moveDirection = new Vector3(horizontalInput, verticalInput, 0f).normalized;
 
-        // Countdown the timer
-        timer -= Time.deltaTime;
+        // Move mainly with WASD input
+        transform.Translate(moveDirection * moveSpeed * Time.deltaTime);
 
-        // If the timer runs out, set a new random movement
-        if (timer <= 0f)
+        // Occasionally glitch and move in random directions
+        if (Random.value < glitchChance)
         {
-            SetRandomMovement();
+            GlitchMovement();
         }
-
-        
-
-        // Approach the mouse position
-        Vector3 directionToMouse = mousePosition - transform.position;
-        transform.Translate(directionToMouse.normalized * moveSpeed * Time.deltaTime);
-
-        if (transform.position.y <= -4f)
-        {
-            //Load DroppingFood Animation
-            //Load Sad Animation
-            //Lose Condition
-            GetComponent<EatingControl>().enabled = false;
-            Debug.Log("No!!!");
-        }
-    }
-
-    void SetRandomMovement()
-    {
-        // Set random speed, direction, and time
-        moveSpeed = Random.Range(0f, 3f);
-        float randomAngle = Random.Range(0f, 360f);
-        randomDirection = Quaternion.Euler(0f, 0f, randomAngle) * Vector3.up;
-        moveTime = Random.Range(0f, 1f);
-        timer = moveTime;
 
         // Update mouse position
         mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePosition.z = 0f;
     }
-    
+
+    void SetRandomMovement()
+    {
+        // Set random glitch parameters
+        glitchSpeed = Random.Range(5f, 10f);
+        glitchChance = Random.Range(0.1f, 0.6f);
+    }
+
+    void GlitchMovement()
+    {
+        // Move in a random direction for a short duration
+        Vector3 glitchDirection = Random.insideUnitCircle.normalized;
+        transform.Translate(glitchDirection * glitchSpeed * Time.deltaTime);
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        //Load Chewing Animation
-        //Load Happy Animation
-        //Win Condition
+        // Load Chewing Animation
+        // Load Happy Animation
+        // Win Condition
         using var evt = MechanicResultEvent.Get(true);
         evt.SendGlobal();
         GetComponent<EatingControl>().enabled = false;
         Debug.Log("Yum!");
     }
 }
-
-
