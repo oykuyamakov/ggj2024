@@ -177,7 +177,7 @@ MonoBehaviour:
   m_IsOccupied: 0
   m_SeatIndicatorImage: {fileID: 510694846}
   m_SitImage: {fileID: 1938051512}
-  m_OccupierPersonSprite: {fileID: 21300000, guid: de081d7d714f6154a991bd68c58502f5, type: 3}
+  m_OccupierPersonSprite: {fileID: 21300000, guid: 8e5532648c7d14af195d69fc145bbaaf, type: 3}
   IsActive: 0
 --- !u!114 &510694846
 MonoBehaviour:
@@ -271,7 +271,7 @@ MonoBehaviour:
   m_IsOccupied: 0
   m_SeatIndicatorImage: {fileID: 777678660}
   m_SitImage: {fileID: 1796326330}
-  m_OccupierPersonSprite: {fileID: 21300000, guid: de081d7d714f6154a991bd68c58502f5, type: 3}
+  m_OccupierPersonSprite: {fileID: 21300000, guid: 8e5532648c7d14af195d69fc145bbaaf, type: 3}
   IsActive: 0
 --- !u!114 &777678660
 MonoBehaviour:
@@ -676,7 +676,7 @@ MonoBehaviour:
   m_IsOccupied: 0
   m_SeatIndicatorImage: {fileID: 1326590221}
   m_SitImage: {fileID: 1147899811}
-  m_OccupierPersonSprite: {fileID: 21300000, guid: de081d7d714f6154a991bd68c58502f5, type: 3}
+  m_OccupierPersonSprite: {fileID: 21300000, guid: 8e5532648c7d14af195d69fc145bbaaf, type: 3}
   IsActive: 0
 --- !u!114 &1326590221
 MonoBehaviour:
